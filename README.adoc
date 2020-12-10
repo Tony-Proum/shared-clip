@@ -39,5 +39,5 @@ $ shared-clip
 Or run it in background (as a startup script or else)
 [bash]
 ----
-$ shared-clip /dev/null 2>&1 &
+$ shared-clip > /dev/null 2>&1 &
 ----
