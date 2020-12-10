@@ -1,0 +1,43 @@
+= Shared Clip
+
+This tool aim to help with usage of the clipboard when using virtual desktops (such as Xephyr)
+It was created to allows host and virtual guest display to share the `virtually same` clipboard.
+This is not really a shared clipboard as the implementation is heavily using copy of data from one clipboard to another.
+But in this case, the usage of Rust helps a lot as it really helps to handle some concurrency pitfalls.
+
+== How it works
+
+Shared-clip will list all started virtual display at startup and then watch for each all events emitted by the clipboard
+using `clipnotify` when an event is emitted on a display, it will be forward to each other display which will sync their state with the first one.
+
+== Getting Started
+
+=== Requirements
+Make sure to have Rust toolchain installed (see: link:https://www.rust-lang.org/tools/install[documentation])
+Shared-clip also rely on link:https://github.com/cdown/clipnotify[clipnotify] and link:https://github.com/astrand/xclip[xclip] tools that should be available for most distros
+through package manager
+
+=== Install from source
+
+In order to compile `shared-clip` firstly run this command:
+
+[bash]
+----
+$ cargo build --release
+----
+
+then you can copy the result binary in your path (you should find it at <shared_clip_source_dir>/target/release/shared-clip)
+
+=== Run shared clip
+
+Run shared-clip in foreground mode seeing all its logs:
+[bash]
+----
+$ shared-clip
+----
+
+Or run it in background (as a startup script or else)
+[bash]
+----
+$ shared-clip /dev/null 2>&1 &
+----
